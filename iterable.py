@@ -25,11 +25,11 @@ headers = {
 def track_users():
     print('hi')
 
-def create_update_users(payload):
-    # print(payload)
+def create_users(payload):
     try:
         response = requests.post(iterable_user_endpoint, headers=headers, json=payload)
-        response.raise_for_status()  # Raise an HTTPError for bad responses (4xx or 5xx)
+        # Raise an HTTPError for bad responses (4xx or 5xx)
+        response.raise_for_status()
         print("Response status code:", response.status_code)
         print("Response JSON:", response.json())
 
@@ -78,7 +78,7 @@ def format_user_data():
             "preferUserId": True,
             "userId": user_id
         }
-        create_update_users(payload)
+        create_users(payload)
 
 
 if __name__ == "__main__":
