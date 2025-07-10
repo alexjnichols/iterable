@@ -13,15 +13,35 @@ try:
         print("Successfully connected to MySQL database!")
 
     # Create a cursor object to execute SQL queries
-    # cursor = mydb.cursor()
+    cursor = mydb.cursor()
 
     # Example: Execute a query
-    # cursor.execute("SELECT * FROM your_table_name")
+    cursor.execute("""
+    SELECT
+        c.id,
+        c.first_name,
+        c.last_name,
+        c.email,
+        c.plan_type,
+        pv.page,
+        pv.device,
+        pv.browser,
+        pv.location,
+        pv.event_time,
+        c.candidate
+    FROM
+        customers c
+    INNER JOIN page_views pv ON pv.user_id = c.id
+    WHERE
+        c.plan_type = 'pro'
+        and (pv.page = 'settings' or pv.page = 'pricing')
+        and pv.event_time > CURRENT_TIMESTAMP() - INTERVAL 7 DAY
+                   """)
 
     # Fetch results
-    # results = cursor.fetchall()
-    # for row in results:
-    #     print(row)
+    results = cursor.fetchall()
+    for row in results:
+        print(row)
 
 except mysql.connector.Error as err:
     print(f"Error: {err}")
