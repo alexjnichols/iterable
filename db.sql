@@ -1,0 +1,24 @@
+DROP TABLE IF EXISTS customers;
+CREATE TABLE customers (
+  id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  email VARCHAR(255) NOT NULL,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  plan_type VARCHAR(255) NOT NULL,
+  candidate VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS page_views;
+CREATE TABLE page_views (
+  id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id INT(11) UNSIGNED,
+  page VARCHAR(255) NOT NULL,
+  device VARCHAR(255) NOT NULL,
+  browser VARCHAR(255) NOT NULL,
+  location VARCHAR(255) NOT NULL,
+  event_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  CONSTRAINT `user_id_unique` UNIQUE (`user_id`),
+  CONSTRAINT `FK_user_id` FOREIGN KEY (`user_id`) REFERENCES `customers` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
